@@ -60,12 +60,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="product in products | orderBy:'-submitted'">
-                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)">{{product.name}}</td>
-                    <td ng-if="product.editing" "><input type="text" required ng-model="product.name" key-escape="cancelEdit(product)" key-enter="toggleEdit(product)"/></td>
-                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)">{{product.quantity}}</td>
-                    <td ng-if="product.editing"><input type="number" min="0" ng-model="product.quantity" key-escape="cancelEdit(product)" key-enter="toggleEdit(product)"/></td>
-                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)">{{product.price}}</td>
-                    <td ng-if="product.editing"><input type="number" min="0" ng-model="product.price"  key-enter="toggleEdit(product)" key-escape="cancelEdit(product)"/></td>
+                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)" event-focus="dblclick" event-focus-id="rowName{{product.id}}">{{product.name}}</td>
+                    <td ng-if="product.editing" "><input id="rowName{{product.id}}" type="text" required ng-model="product.name" key-escape="cancelEdit(product)" key-enter="toggleEdit(product)"/></td>
+                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)" event-focus="dblclick" event-focus-id="rowQuantity{{product.id}}">{{product.quantity}}</td>
+                    <td ng-if="product.editing"><input id=rowQuantity{{product.id}} type="number" min="0" ng-model="product.quantity" key-escape="cancelEdit(product)" key-enter="toggleEdit(product)"/></td>
+                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)" event-focus="dblclick" event-focus-id="rowPrice{{product.id}}">{{product.price}}</td>
+                    <td ng-if="product.editing"><input id="rowPrice{{product.id}}" type="number" min="0" ng-model="product.price"  key-enter="toggleEdit(product)" key-escape="cancelEdit(product)"/></td>
                     <td>{{product.submitted | date:'medium'}}</td>
                     <td>{{product.quantity * product.price | number:2}}</td>
                     <td class="nowrap">
