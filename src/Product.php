@@ -55,7 +55,7 @@ class Product {
      */
     public static function getAll()
     {
-        $products = [];
+        $products = array();
         $files = array_filter(glob(self::getDataDir() . '*.json'), 'is_file');
 
         foreach ($files as $file) {
