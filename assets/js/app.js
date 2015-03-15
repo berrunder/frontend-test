@@ -99,6 +99,7 @@
                 if (product.editing) {
                     fileService.updateProduct(product).
                         error(function(resp) {
+                            $scope.cancelEdit(product);
                             console.log(resp);
                         });
                 } else {
