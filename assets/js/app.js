@@ -30,10 +30,23 @@
         };
     });
 
+    app.directive('keyEscape', function () {
+        var ESCAPE_KEY = 27;
+        return function (scope, elem, attrs) {
+            elem.bind('keydown', function (event) {
+                if (event.keyCode === ESCAPE_KEY) {
+                    scope.$apply(attrs.keyEscape);
+                }
+            });
+        };
+    });
+
+
     app.controller('TestController', ['$scope', '$http', 'fileService',
         function ($scope, $http, fileService) {
             $scope.products = [];
             $scope.newProduct = {};
+            var originalProducts = {};
 
             fileService.getProducts().
                 success(function(data) {
@@ -70,9 +83,21 @@
                         error(function(resp) {
                             console.log(resp);
                         });
+                } else {
+                    originalProducts[product.id] = angular.copy(product);
                 }
 
                 product.editing = !product.editing;
+            };
+
+            $scope.cancelEdit = function(product) {
+                var originalProduct = originalProducts[product.id];
+                if (originalProduct) {
+                    product.name = originalProduct.name;
+                    product.quantity = originalProduct.quantity;
+                    product.price = originalProduct.price;
+                }
+                product.editing = false;
             };
 
             $scope.deleteProduct = function(product) {
