@@ -34,7 +34,7 @@ $app->get('/product', function() use ($app) {
 
 $app->put('/product/:id', function($id) use ($app) {
     $body = $app->request->getBody();
-    if (Product::update(json_decode($body)) !== false) {
+    if (Product::update($id, json_decode($body)) !== false) {
         $app->response->setStatus(204);
     } else {
         $app->response->setStatus(500);

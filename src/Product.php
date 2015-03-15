@@ -72,18 +72,19 @@ class Product {
     }
 
     /**
+     * @param int $id
      * @param \stdClass $product
      * @return bool|int
      */
-    public static function update($product)
+    public static function update($id, $product)
     {
-        $oldProduct = self::findOne($product->id);
+        $oldProduct = self::findOne($id);
         if ($oldProduct) {
             $oldProduct->name = $product->name;
             $oldProduct->quantity = $product->quantity;
             $oldProduct->price = $product->price;
 
-            return self::save($oldProduct, $product->id);
+            return self::save($oldProduct, $id);
         }
 
         return false;
