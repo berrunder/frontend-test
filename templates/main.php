@@ -47,7 +47,7 @@
             </div>
         </form>
         <table class="table table-striped" ng-show="products.length > 0" ng-cloak>
-            <caption>Submitted products</caption>
+            <caption><h3 class="text-center">Submitted products</h3></caption>
             <thead>
                 <tr>
                     <th>Product name</th>
