@@ -3,16 +3,33 @@
 
 class Product {
 
-    public static function remove($id)
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public static function findOne($id)
     {
-        return unlink(DATA_DIR . DIRECTORY_SEPARATOR . "$id.json");
+        return json_decode(file_get_contents(self::getDataDir() . "$id.json"));
     }
 
-    public static function save($product)
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public static function remove($id)
+    {
+        return unlink(self::getDataDir() . "$id.json");
+    }
+
+    /**
+     * @param \stdClass $product
+     * @return array
+     */
+    public static function add($product)
     {
         if ($product) {
             $product->submitted = time() * 1000;
-            $files = array_filter(glob(DATA_DIR . DIRECTORY_SEPARATOR . '*.json'), 'is_file');
+            $files = array_filter(glob(self::getDataDir() . '*.json'), 'is_file');
             $num = 1;
             foreach ($files as $file) {
                 $fileId = intval(basename($file, ".json"));
@@ -21,7 +38,7 @@ class Product {
                 }
             }
 
-            if (file_put_contents(DATA_DIR . DIRECTORY_SEPARATOR . $num . '.json', json_encode($product)) !== false) {
+            if (self::save($product, $num) !== false) {
                 return array(
                     'success' => true,
                     'id' => $num,
@@ -33,10 +50,13 @@ class Product {
         return array('success' => false);
     }
 
+    /**
+     * @return array
+     */
     public static function getAll()
     {
         $products = [];
-        $files = array_filter(glob(DATA_DIR . DIRECTORY_SEPARATOR . '*.json'), 'is_file');
+        $files = array_filter(glob(self::getDataDir() . '*.json'), 'is_file');
 
         foreach ($files as $file) {
             $fileId = intval(basename($file, ".json"));
@@ -49,5 +69,38 @@ class Product {
         }
 
         return $products;
+    }
+
+    /**
+     * @param \stdClass $product
+     * @return bool|int
+     */
+    public static function update($product)
+    {
+        $oldProduct = self::findOne($product->id);
+        if ($oldProduct) {
+            $oldProduct->name = $product->name;
+            $oldProduct->quantity = $product->quantity;
+            $oldProduct->price = $product->price;
+
+            return self::save($oldProduct, $product->id);
+        }
+
+        return false;
+    }
+
+    protected static function getDataDir()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR .  '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param \stdClass $product
+     * @param int $id
+     * @return int
+     */
+    public static function save($product, $id)
+    {
+        return file_put_contents(self::getDataDir() . $id . '.json', json_encode($product));
     }
 }

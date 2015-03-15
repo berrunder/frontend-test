@@ -59,13 +59,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="product in products | orderBy:'-submitted'" ng-cloak>
+                <tr ng-repeat="product in products | orderBy:'-submitted'">
                     <td>{{product.name}}</td>
-                    <td>{{product.quantity}}</td>
-                    <td>{{product.price}}</td>
+                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)">{{product.quantity}}</td>
+                    <td ng-if="product.editing"><input type="number" min="0" ng-model="product.quantity" key-enter="toggleEdit(product)"/></td>
+                    <td ng-if="!product.editing" ng-dblclick="toggleEdit(product)">{{product.price}}</td>
+                    <td ng-if="product.editing"><input type="number" min="0" ng-model="product.price"  key-enter="toggleEdit(product)"/></td>
                     <td>{{product.submitted | date:'medium'}}</td>
                     <td>{{product.quantity * product.price | number:2}}</td>
-                    <td>
+                    <td class="nowrap">
+                        <button ng-click="toggleEdit(product)" class="glyphicon btn btn-default" ng-class="{'glyphicon-edit': !product.editing, 'glyphicon-ok': product.editing}" title="{{ product.editing ? 'Save product' : 'Edit product'}}"></button>
                         <button ng-click="deleteProduct(product)" class="glyphicon glyphicon-remove btn btn-danger" title="Remove product"></button>
                     </td>
                 </tr>

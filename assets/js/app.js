@@ -2,25 +2,33 @@
     'use strict';
     var app = angular.module('testApp', []);
 
-    app.service('fileService', ['$http', function($http) {
-        var postProduct = function(product) {
-            return $http.post('/product', product);
-        };
-
-        var getProducts = function() {
-            return $http.get('/product');
-        };
-
-        var removeProduct = function(id) {
-            return $http.delete('/product/' + id);
-        };
-
+    app.service('fileService', ['$http', function ($http) {
         return {
-            postProduct: postProduct,
-            getProducts: getProducts,
-            removeProduct: removeProduct
+            postProduct: function (product) {
+                return $http.post('/product', product);
+            },
+            getProducts: function () {
+                return $http.get('/product');
+            },
+            removeProduct: function (id) {
+                return $http.delete('/product/' + id);
+            },
+            updateProduct: function (product) {
+                return $http.put('/product/' + product.id, product);
+            }
         };
     }]);
+
+    app.directive('keyEnter', function () {
+        var ENTER_KEY = 13;
+        return function (scope, elem, attrs) {
+            elem.bind('keydown', function (event) {
+                if (event.keyCode === ENTER_KEY) {
+                    scope.$apply(attrs.keyEnter);
+                }
+            });
+        };
+    });
 
     app.controller('TestController', ['$scope', '$http', 'fileService',
         function ($scope, $http, fileService) {
@@ -51,9 +59,20 @@
                             console.log(data);
                         }
                     }).
-                    error(function(data) {
-                        console.log(data);
+                    error(function(resp) {
+                        console.log(resp);
                     })
+            };
+
+            $scope.toggleEdit = function(product) {
+                if (product.editing) {
+                    fileService.updateProduct(product).
+                        error(function(resp) {
+                            console.log(resp);
+                        });
+                }
+
+                product.editing = !product.editing;
             };
 
             $scope.deleteProduct = function(product) {
