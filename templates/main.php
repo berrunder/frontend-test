@@ -46,7 +46,7 @@
                 </div>
             </div>
         </form>
-        <table class="table table-striped" ng-show="products.length > 0" nc-cloak>
+        <table class="table table-striped" ng-show="products.length > 0" ng-cloak>
             <caption>Submitted products</caption>
             <thead>
                 <tr>
@@ -55,6 +55,7 @@
                     <th>Price per item</th>
                     <th>Datetime submitted</th>
                     <th>Total value number</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -64,12 +65,16 @@
                     <td>{{product.price}}</td>
                     <td>{{product.submitted | date:'medium'}}</td>
                     <td>{{product.quantity * product.price | number:2}}</td>
+                    <td>
+                        <button ng-click="deleteProduct(product)" class="glyphicon glyphicon-remove btn btn-danger" title="Remove product"></button>
+                    </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="4">Total: </td>
                     <td ng-cloak>{{getTotalPrice() | number:2}}</td>
+                    <td></td>
                 </tr>
             </tfoot>
         </table>

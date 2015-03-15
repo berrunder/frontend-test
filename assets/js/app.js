@@ -11,9 +11,14 @@
             return $http.get('/product');
         };
 
+        var removeProduct = function(id) {
+            return $http.delete('/product/' + id);
+        };
+
         return {
             postProduct: postProduct,
-            getProducts: getProducts
+            getProducts: getProducts,
+            removeProduct: removeProduct
         };
     }]);
 
@@ -49,6 +54,14 @@
                     error(function(data) {
                         console.log(data);
                     })
+            };
+
+            $scope.deleteProduct = function(product) {
+                var index = $scope.products.indexOf(product);
+                if (index >= 0) {
+                    fileService.removeProduct(product.id);
+                    $scope.products.splice(index, 1);
+                }
             };
 
             $scope.getTotalPrice = function() {

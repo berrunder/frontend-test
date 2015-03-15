@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require 'src/Product.php';
 
 define('DATA_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'data');
 
@@ -25,6 +26,14 @@ $app->get('/product', function() use ($app) {
     $products = getProducts();
     $app->response->headers->set('Content-Type', 'application/json');
     $app->response->setBody(json_encode($products));
+});
+
+$app->delete('/product/:id', function($id) use ($app) {
+    if (Product::remove($id)) {
+        $app->response->setStatus(204);
+    } else {
+        $app->response->setStatus(500);
+    }
 });
 
 $app->run();
