@@ -1,0 +1,7 @@
+[ng-cloak] {
+    display: none !important;
+}
+
+.table tfoot {
+    font-weight: bold;
+}
