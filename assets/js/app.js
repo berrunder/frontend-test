@@ -134,7 +134,7 @@
             };
 
             $scope.invalidNum = function(field) {
-                return (field.$error.required || field.$error.number) && field.$dirty;
+                return (field.$error.required || field.$error.number || field.$error.min) && field.$dirty;
             };
         }]);
 })(angular);
