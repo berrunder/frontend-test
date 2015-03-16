@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-2 col-sm-4">
                     <button type="submit" class="btn btn-success btn-block" ng-disabled="productForm.$invalid">Add</button>
                 </div>
             </div>
