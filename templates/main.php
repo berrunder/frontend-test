@@ -27,17 +27,26 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputName" placeholder="Product name" ng-model="newProduct.name" name="name" required/>
                 </div>
+                <div class="col-sm-offset-2 col-sm-10" ng-show="productForm.name.$error.required && productForm.name.$dirty">
+                    <p class="text-danger control-label">Product name is required</p>
+                </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': invalidNum(productForm.quantity) }">
                 <label for="inputQuantity" class="col-sm-2 control-label">Quantity in stock</label>
                 <div class="col-sm-10">
                     <input type="number" min="0" class="form-control" id="inputQuantity" placeholder="Quantity in stock" ng-model="newProduct.quantity" name="quantity" required>
                 </div>
+                <div class="col-sm-offset-2 col-sm-10" ng-show="invalidNum(productForm.quantity)">
+                    <p class="text-danger control-label">Quantity field must contain a positive number</p>
+                </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': invalidNum(productForm.price) }">
                 <label for="inputPrice" class="col-sm-2 control-label">Price per item</label>
                 <div class="col-sm-10">
                     <input type="text" positive-num class="form-control" id="inputPrice" placeholder="Price per item" ng-model="newProduct.price" name="price" required>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10" ng-show="invalidNum(productForm.price)">
+                    <p class="text-danger control-label">Price field must contain a positive number</p>
                 </div>
             </div>
             <div class="form-group">
