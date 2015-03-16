@@ -19,6 +19,22 @@
         };
     }]);
 
+    var POSITIVE_REGEXP = /^\+?\d+(?:\.\d+)?$/;
+    app.directive('positiveNum', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.positiveNum = function(modelValue, viewValue) {
+                    if (ctrl.$isEmpty(modelValue)) {
+                        return true;
+                    }
+
+                    return !!POSITIVE_REGEXP.test(viewValue);
+                };
+            }
+        };
+    });
+
     app.directive('keyEnter', function () {
         var ENTER_KEY = 13;
         return function (scope, elem, attrs) {
@@ -134,7 +150,7 @@
             };
 
             $scope.invalidNum = function(field) {
-                return (field.$error.required || field.$error.number || field.$error.min) && field.$dirty;
+                return (field.$error.positiveNum ||field.$error.required || field.$error.number || field.$error.min) && field.$dirty;
             };
         }]);
 })(angular);

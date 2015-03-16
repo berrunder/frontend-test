@@ -37,7 +37,7 @@
             <div class="form-group" ng-class="{ 'has-error': invalidNum(productForm.price) }">
                 <label for="inputPrice" class="col-sm-2 control-label">Price per item</label>
                 <div class="col-sm-10">
-                    <input type="number" min="0" class="form-control" id="inputPrice" placeholder="Price per item" ng-model="newProduct.price" name="price" required>
+                    <input type="text" positive-num class="form-control" id="inputPrice" placeholder="Price per item" ng-model="newProduct.price" name="price" required>
                 </div>
             </div>
             <div class="form-group">
