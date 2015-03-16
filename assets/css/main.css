@@ -2,10 +2,18 @@
     display: none !important;
 }
 
+.table caption {
+    padding-left: 15px;
+}
+
 .table tfoot {
     font-weight: bold;
 }
 
 .nowrap {
     white-space: nowrap;
+}
+
+.form-horizontal.labels-left .control-label {
+    text-align: left;
 }

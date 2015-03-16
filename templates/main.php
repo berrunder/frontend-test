@@ -19,8 +19,8 @@
 </head>
 <body>
     <div class="container" ng-controller="TestController">
-        <form class="form-horizontal" ng-submit="submitProduct()" novalidate name="productForm">
-            <div class="col-sm-offset-2 col-sm-10"><h2>Add new product</h2></div>
+        <form class="form-horizontal labels-left" ng-submit="submitProduct()" novalidate name="productForm">
+            <div class="col-sm-12"><h2>Add new product</h2></div>
     <!--            Product name, Quantity in stock, Price per item.-->
             <div class="form-group" ng-class="{ 'has-error': productForm.name.$error.required && productForm.name.$dirty }">
                 <label for="inputName" class="col-sm-2 control-label">Product name</label>
@@ -42,12 +42,12 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success" ng-disabled="productForm.$invalid">Add</button>
+                    <button type="submit" class="btn btn-success btn-block" ng-disabled="productForm.$invalid">Add</button>
                 </div>
             </div>
         </form>
         <table class="table table-striped" ng-show="products.length > 0" ng-cloak>
-            <caption><h3 class="text-center">Submitted products</h3></caption>
+            <caption><h3>Submitted products</h3></caption>
             <thead>
                 <tr>
                     <th>Product name</th>
