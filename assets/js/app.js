@@ -137,7 +137,7 @@
 
             $scope.deleteProduct = function(product) {
                 var index = $scope.products.indexOf(product);
-                if (index >= 0) {
+                if (index >= 0 && confirm('Remove product ' + product.name + '?')) {
                     fileService.removeProduct(product.id);
                     $scope.products.splice(index, 1);
                 }
